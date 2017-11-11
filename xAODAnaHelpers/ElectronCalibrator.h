@@ -44,7 +44,7 @@ public:
 
   /// Sort the processed container elements by transverse momentum
   bool    m_sort = true;
-
+  bool    m_runOverSkimAOD = false;
 // systematics
   /**
     @brief The name of the vector containing the names of the systematically-varied containers from the upstream algorithm, which will be processed by this algorithm.

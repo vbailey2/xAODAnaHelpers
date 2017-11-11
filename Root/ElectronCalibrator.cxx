@@ -292,11 +292,13 @@ EL::StatusCode ElectronCalibrator :: execute ()
       // apply calibration (w/ syst) and leakage correction to calo based iso vars
       //
       if ( elSC_itr->caloCluster() && elSC_itr->trackParticle() ) {  // NB: derivations might remove CC and tracks for low pt electrons
+	if (!m_runOverSkimAOD){
 	if ( m_EgammaCalibrationAndSmearingTool->applyCorrection( *elSC_itr ) != CP::CorrectionCode::Ok ) {
 	  ANA_MSG_WARNING( "Problem in CP::EgammaCalibrationAndSmearingTool::applyCorrection()");
 	}
 	if ( elSC_itr->pt() > 7e3 && m_IsolationCorrectionTool->CorrectLeakage( *elSC_itr ) != CP::CorrectionCode::Ok ) {
 	  ANA_MSG_WARNING( "Problem in CP::IsolationCorrectionTool::CorrectLeakage()");
+	}
 	}
       }
 
