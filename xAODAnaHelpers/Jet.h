@@ -211,6 +211,10 @@ namespace xAH {
       // charge
       double charge;
 
+      // bjet Scales
+      std::map<std::string, TLorentzVector> m_bjetScales;
+      
+
       const Muon* matchedMuon;
       const Jet * matchedJet;
 

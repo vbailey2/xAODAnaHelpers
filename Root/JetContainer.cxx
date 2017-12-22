@@ -63,6 +63,30 @@ JetContainer::JetContainer(const std::string& name, const std::string& detailStr
     m_insituScalePt	    = new std::vector<float>(); 
   }
 
+  // scales
+  if ( m_infoSwitch.m_bjetscales ) {
+    m_BJetCalib_OneMuDr04                         = new jetScale("BJetCalib_OneMuDr04"                       );
+    m_BJetCalib_OneMuNuDr04                       = new jetScale("BJetCalib_OneMuNuDr04"                     );
+    m_BJetCalib_AllMuDr04                         = new jetScale("BJetCalib_AllMuDr04"                       );
+    m_BJetCalib_AllMuNuDr04                       = new jetScale("BJetCalib_AllMuNuDr04"                     );
+    m_BJetCalib_OneMuPtDepDr                      = new jetScale("BJetCalib_OneMuPtDepDr"                    );
+    m_BJetCalib_OneMuNuPtDepDr                    = new jetScale("BJetCalib_OneMuNuPtDepDr"                  );
+    m_BJetCalib_AllMuPtDepDr                      = new jetScale("BJetCalib_AllMuPtDepDr"                    );
+    m_BJetCalib_AllMuNuPtDepDr                    = new jetScale("BJetCalib_AllMuNuPtDepDr"                  );
+    m_BJetCalib_OneMuPtDepDrCorMu04               = new jetScale("BJetCalib_OneMuPtDepDrCorMu04"             );
+    m_BJetCalib_OneMuNuPtDepDrCorMu04             = new jetScale("BJetCalib_OneMuNuPtDepDrCorMu04"           );
+    m_BJetCalib_AllMuPtDepDrCorMu04               = new jetScale("BJetCalib_AllMuPtDepDrCorMu04"             );
+    m_BJetCalib_AllMuNuPtDepDrCorMu04             = new jetScale("BJetCalib_AllMuNuPtDepDrCorMu04"           );
+    m_BJetCalib_OneMuPtDepDrCorMu04CorEl04        = new jetScale("BJetCalib_OneMuPtDepDrCorMu04CorEl04"      );
+    m_BJetCalib_OneMuNuPtDepDrCorMu04CorEl04      = new jetScale("BJetCalib_OneMuNuPtDepDrCorMu04CorEl04"    );
+    m_BJetCalib_AllMuPtDepDrCorMu04CorEl04        = new jetScale("BJetCalib_AllMuPtDepDrCorMu04CorEl04"      );
+    m_BJetCalib_AllMuNuPtDepDrCorMu04CorEl04      = new jetScale("BJetCalib_AllMuNuPtDepDrCorMu04CorEl04"    );
+    m_BJetCalib_OneMuDr04PtReco                   = new jetScale("BJetCalib_OneMuDr04PtReco"                 );
+    m_BJetCalib_OneMuPtDepDrCorMu04PtReco         = new jetScale("BJetCalib_OneMuPtDepDrCorMu04PtReco"       );
+    m_BJetCalib_AllMuPtDepDrCorMu04CorEl04PtReco  = new jetScale("BJetCalib_AllMuPtDepDrCorMu04CorEl04PtReco");
+  }
+
+
   // constscale eta
   if ( m_infoSwitch.m_constscaleEta ) {
     m_constScaleEta               = new std::vector<float>(); 
@@ -396,6 +420,30 @@ JetContainer::~JetContainer()
     delete m_gscScalePt		   ;
     delete m_insituScalePt	   ;
   }
+
+  // scales
+  if ( m_infoSwitch.m_bjetscales ) {
+    delete m_BJetCalib_OneMuDr04;
+    delete m_BJetCalib_OneMuNuDr04;
+    delete m_BJetCalib_AllMuDr04;
+    delete m_BJetCalib_AllMuNuDr04;
+    delete m_BJetCalib_OneMuPtDepDr;
+    delete m_BJetCalib_OneMuNuPtDepDr;
+    delete m_BJetCalib_AllMuPtDepDr;
+    delete m_BJetCalib_AllMuNuPtDepDr;
+    delete m_BJetCalib_OneMuPtDepDrCorMu04;
+    delete m_BJetCalib_OneMuNuPtDepDrCorMu04;
+    delete m_BJetCalib_AllMuPtDepDrCorMu04;
+    delete m_BJetCalib_AllMuNuPtDepDrCorMu04;
+    delete m_BJetCalib_OneMuPtDepDrCorMu04CorEl04;
+    delete m_BJetCalib_OneMuNuPtDepDrCorMu04CorEl04;
+    delete m_BJetCalib_AllMuPtDepDrCorMu04CorEl04;
+    delete m_BJetCalib_AllMuNuPtDepDrCorMu04CorEl04;
+    delete m_BJetCalib_OneMuDr04PtReco;
+    delete m_BJetCalib_OneMuPtDepDrCorMu04PtReco;
+    delete m_BJetCalib_AllMuPtDepDrCorMu04CorEl04PtReco;
+  }
+
 
   // constscale eta 
   if ( m_infoSwitch.m_constscaleEta ) {
@@ -917,6 +965,30 @@ void JetContainer::setTree(TTree *tree, const std::string& tagger)
     {
       connectBranch<double>(tree,"charge", &m_charge);
     }
+
+  if(m_infoSwitch.m_bjetscales)
+    {
+      m_BJetCalib_OneMuDr04->connectBranch(this,tree);
+      m_BJetCalib_OneMuNuDr04->connectBranch(this,tree);
+      m_BJetCalib_AllMuDr04->connectBranch(this,tree);
+      m_BJetCalib_AllMuNuDr04->connectBranch(this,tree);
+      m_BJetCalib_OneMuPtDepDr->connectBranch(this,tree);
+      m_BJetCalib_OneMuNuPtDepDr->connectBranch(this,tree);
+      m_BJetCalib_AllMuPtDepDr->connectBranch(this,tree);
+      m_BJetCalib_AllMuNuPtDepDr->connectBranch(this,tree);
+      m_BJetCalib_OneMuPtDepDrCorMu04->connectBranch(this,tree);
+      m_BJetCalib_OneMuNuPtDepDrCorMu04->connectBranch(this,tree);
+      m_BJetCalib_AllMuPtDepDrCorMu04->connectBranch(this,tree);
+      m_BJetCalib_AllMuNuPtDepDrCorMu04->connectBranch(this,tree);
+      m_BJetCalib_OneMuPtDepDrCorMu04CorEl04->connectBranch(this,tree);
+      m_BJetCalib_OneMuNuPtDepDrCorMu04CorEl04->connectBranch(this,tree);
+      m_BJetCalib_AllMuPtDepDrCorMu04CorEl04->connectBranch(this,tree);
+      m_BJetCalib_AllMuNuPtDepDrCorMu04CorEl04->connectBranch(this,tree);
+      m_BJetCalib_OneMuDr04PtReco->connectBranch(this,tree);
+      m_BJetCalib_OneMuPtDepDrCorMu04PtReco->connectBranch(this,tree);
+      m_BJetCalib_AllMuPtDepDrCorMu04CorEl04PtReco->connectBranch(this,tree);
+
+    }
 }
 
 void JetContainer::updateParticle(uint idx, Jet& jet)
@@ -1193,6 +1265,33 @@ void JetContainer::updateParticle(uint idx, Jet& jet)
       jet.charge=m_charge->at(idx);
     }
 
+  // charge
+  if(m_infoSwitch.m_bjetscales)
+    {
+      jet.m_bjetScales.clear();
+
+      m_BJetCalib_OneMuDr04->updateParticle(idx,jet);			     
+      m_BJetCalib_OneMuNuDr04->updateParticle(idx,jet);		     
+      m_BJetCalib_AllMuDr04->updateParticle(idx,jet);			     
+      m_BJetCalib_AllMuNuDr04->updateParticle(idx,jet);		     
+      m_BJetCalib_OneMuPtDepDr->updateParticle(idx,jet);		     
+      m_BJetCalib_OneMuNuPtDepDr->updateParticle(idx,jet);		     
+      m_BJetCalib_AllMuPtDepDr->updateParticle(idx,jet);		     
+      m_BJetCalib_AllMuNuPtDepDr->updateParticle(idx,jet);		     
+      m_BJetCalib_OneMuPtDepDrCorMu04->updateParticle(idx,jet);	     
+      m_BJetCalib_OneMuNuPtDepDrCorMu04->updateParticle(idx,jet);	     
+      m_BJetCalib_AllMuPtDepDrCorMu04->updateParticle(idx,jet);	     
+      m_BJetCalib_AllMuNuPtDepDrCorMu04->updateParticle(idx,jet);	     
+      m_BJetCalib_OneMuPtDepDrCorMu04CorEl04->updateParticle(idx,jet);	     
+      m_BJetCalib_OneMuNuPtDepDrCorMu04CorEl04->updateParticle(idx,jet);    
+      m_BJetCalib_AllMuPtDepDrCorMu04CorEl04->updateParticle(idx,jet);	      
+      m_BJetCalib_AllMuNuPtDepDrCorMu04CorEl04->updateParticle(idx,jet);    
+      m_BJetCalib_OneMuDr04PtReco->updateParticle(idx,jet);		     
+      m_BJetCalib_OneMuPtDepDrCorMu04PtReco->updateParticle(idx,jet);	      
+      m_BJetCalib_AllMuPtDepDrCorMu04CorEl04PtReco->updateParticle(idx,jet);
+    }
+
+
   if(m_debug) cout << "leave JetContainer::updateParticle " << endl;
   return;
 }
@@ -1251,6 +1350,30 @@ void JetContainer::setBranches(TTree *tree)
     setBranch<float>(tree,"gscScalePt",             m_gscScalePt           );
     setBranch<float>(tree,"insituScalePt",          m_insituScalePt        );
   }
+
+
+  if ( m_infoSwitch.m_bjetscales ) {
+    m_BJetCalib_OneMuDr04->setBranch(this,tree);
+    m_BJetCalib_OneMuNuDr04->setBranch(this,tree);
+    m_BJetCalib_AllMuDr04->setBranch(this,tree);
+    m_BJetCalib_AllMuNuDr04->setBranch(this,tree);
+    m_BJetCalib_OneMuPtDepDr->setBranch(this,tree);
+    m_BJetCalib_OneMuNuPtDepDr->setBranch(this,tree);
+    m_BJetCalib_AllMuPtDepDr->setBranch(this,tree);
+    m_BJetCalib_AllMuNuPtDepDr->setBranch(this,tree);
+    m_BJetCalib_OneMuPtDepDrCorMu04->setBranch(this,tree);
+    m_BJetCalib_OneMuNuPtDepDrCorMu04->setBranch(this,tree);
+    m_BJetCalib_AllMuPtDepDrCorMu04->setBranch(this,tree);
+    m_BJetCalib_AllMuNuPtDepDrCorMu04->setBranch(this,tree);
+    m_BJetCalib_OneMuPtDepDrCorMu04CorEl04->setBranch(this,tree);
+    m_BJetCalib_OneMuNuPtDepDrCorMu04CorEl04->setBranch(this,tree);
+    m_BJetCalib_AllMuPtDepDrCorMu04CorEl04->setBranch(this,tree);
+    m_BJetCalib_AllMuNuPtDepDrCorMu04CorEl04->setBranch(this,tree);
+    m_BJetCalib_OneMuDr04PtReco->setBranch(this,tree);
+    m_BJetCalib_OneMuPtDepDrCorMu04PtReco->setBranch(this,tree);
+    m_BJetCalib_AllMuPtDepDrCorMu04CorEl04PtReco->setBranch(this,tree);
+  }
+
 
   if ( m_infoSwitch.m_constscaleEta ) {
     setBranch<float>(tree,"constScaleEta",              m_constScaleEta            );
@@ -1592,6 +1715,30 @@ void JetContainer::clear()
     m_gscScalePt	    ->clear(); 
     m_insituScalePt	    ->clear();
   }
+
+  // each step of the calibration sequence
+  if ( m_infoSwitch.m_bjetscales ) {
+    m_BJetCalib_OneMuDr04->clear();			     
+    m_BJetCalib_OneMuNuDr04->clear();		     
+    m_BJetCalib_AllMuDr04->clear();			     
+    m_BJetCalib_AllMuNuDr04->clear();		     
+    m_BJetCalib_OneMuPtDepDr->clear();		     
+    m_BJetCalib_OneMuNuPtDepDr->clear();		     
+    m_BJetCalib_AllMuPtDepDr->clear();		     
+    m_BJetCalib_AllMuNuPtDepDr->clear();		     
+    m_BJetCalib_OneMuPtDepDrCorMu04->clear();	     
+    m_BJetCalib_OneMuNuPtDepDrCorMu04->clear();	     
+    m_BJetCalib_AllMuPtDepDrCorMu04->clear();	     
+    m_BJetCalib_AllMuNuPtDepDrCorMu04->clear();	     
+    m_BJetCalib_OneMuPtDepDrCorMu04CorEl04->clear();	     
+    m_BJetCalib_OneMuNuPtDepDrCorMu04CorEl04->clear();    
+    m_BJetCalib_AllMuPtDepDrCorMu04CorEl04->clear();	      
+    m_BJetCalib_AllMuNuPtDepDrCorMu04CorEl04->clear();    
+    m_BJetCalib_OneMuDr04PtReco->clear();		     
+    m_BJetCalib_OneMuPtDepDrCorMu04PtReco->clear();	      
+    m_BJetCalib_AllMuPtDepDrCorMu04CorEl04PtReco->clear();
+  }
+
 
   // eta at constScale
   if ( m_infoSwitch.m_constscaleEta ) {
@@ -2004,6 +2151,32 @@ void JetContainer::FillJet( const xAOD::IParticle* particle, const xAOD::Vertex*
     if(status) { m_insituScalePt->push_back( fourVec.Pt() / m_units ); }
     else { m_insituScalePt->push_back( -999 ); }
   }
+
+  // each step of the calibration sequence
+  if ( m_infoSwitch.m_bjetscales ) {
+    m_BJetCalib_OneMuDr04->Fill(this, jet);
+    m_BJetCalib_OneMuDr04->Fill(this,jet);			     
+    m_BJetCalib_OneMuNuDr04->Fill(this,jet);		     
+    m_BJetCalib_AllMuDr04->Fill(this,jet);			     
+    m_BJetCalib_AllMuNuDr04->Fill(this,jet);		     
+    m_BJetCalib_OneMuPtDepDr->Fill(this,jet);		     
+    m_BJetCalib_OneMuNuPtDepDr->Fill(this,jet);		     
+    m_BJetCalib_AllMuPtDepDr->Fill(this,jet);		     
+    m_BJetCalib_AllMuNuPtDepDr->Fill(this,jet);		     
+    m_BJetCalib_OneMuPtDepDrCorMu04->Fill(this,jet);	     
+    m_BJetCalib_OneMuNuPtDepDrCorMu04->Fill(this,jet);	     
+    m_BJetCalib_AllMuPtDepDrCorMu04->Fill(this,jet);	     
+    m_BJetCalib_AllMuNuPtDepDrCorMu04->Fill(this,jet);	     
+    m_BJetCalib_OneMuPtDepDrCorMu04CorEl04->Fill(this,jet);	     
+    m_BJetCalib_OneMuNuPtDepDrCorMu04CorEl04->Fill(this,jet);    
+    m_BJetCalib_AllMuPtDepDrCorMu04CorEl04->Fill(this,jet);	      
+    m_BJetCalib_AllMuNuPtDepDrCorMu04CorEl04->Fill(this,jet);    
+    m_BJetCalib_OneMuDr04PtReco->Fill(this,jet);		     
+    m_BJetCalib_OneMuPtDepDrCorMu04PtReco->Fill(this,jet);	      
+    m_BJetCalib_AllMuPtDepDrCorMu04CorEl04PtReco->Fill(this,jet);
+
+  }
+
 
   if ( m_infoSwitch.m_constscaleEta ) {
     xAOD::JetFourMom_t fourVec;

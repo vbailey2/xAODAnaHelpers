@@ -387,6 +387,7 @@ namespace HelperClasses {
         m_clean          clean          exact
         m_energy         energy         exact
         m_scales         scales         exact
+        m_bjetscales     bjetscales     exact
         m_constscaleEta  constscaleEta  exact
         m_resolution     resolution     exact
         m_truth          truth          exact
@@ -437,6 +438,7 @@ namespace HelperClasses {
     bool m_clean;
     bool m_energy;
     bool m_scales;
+    bool m_bjetscales;
     bool m_constscaleEta;
     bool m_resolution;
     bool m_truth;

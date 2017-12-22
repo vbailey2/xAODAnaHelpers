@@ -91,6 +91,94 @@ namespace xAH {
       std::vector<float> *m_gscScalePt;
       std::vector<float> *m_insituScalePt;
 
+      // bjet Scale
+      struct jetScale {
+	std::string    name;
+	std::vector<float>* Pt;
+	std::vector<float>* Eta;
+	std::vector<float>* Phi;
+	std::vector<float>* M;
+
+        jetScale(std::string scaleName){
+	  name = scaleName;
+	  Pt  = new std::vector<float>();
+	  Eta = new std::vector<float>();
+	  Phi = new std::vector<float>();
+	  M   = new std::vector<float>();
+        }
+
+        ~jetScale(){
+          delete Pt;
+          delete Eta;
+          delete Phi;
+          delete M;
+        }
+
+        void setBranch(JetContainer* jetContInst, TTree *tree){
+	  jetContInst->setBranch<float>(tree,  name+"_Pt",          Pt         );
+	  jetContInst->setBranch<float>(tree,  name+"_Eta",         Eta        );
+	  jetContInst->setBranch<float>(tree,  name+"_Phi",         Phi        );
+	  jetContInst->setBranch<float>(tree,  name+"_M",           M          );
+        }
+
+        void connectBranch(JetContainer* jetContInst, TTree *tree){
+	  jetContInst->connectBranch<float>(tree,  name+"_Pt",          &Pt         );
+	  jetContInst->connectBranch<float>(tree,  name+"_Eta",         &Eta        );
+	  jetContInst->connectBranch<float>(tree,  name+"_Phi",         &Phi        );
+	  jetContInst->connectBranch<float>(tree,  name+"_M",           &M          );
+        }
+
+	void updateParticle(uint idx, xAH::Jet& jet){
+	  jet.m_bjetScales[name] = TLorentzVector();
+	  jet.m_bjetScales[name].SetPtEtaPhiM(Pt->at(idx),Eta->at(idx),Phi->at(idx),M->at(idx));
+	}
+
+        void Fill(JetContainer* jetContInst, const xAOD::Jet* jet){
+	  xAOD::JetFourMom_t fourVec;
+	  bool status = jet->getAttribute<xAOD::JetFourMom_t>( name, fourVec );
+	  if( status ) { 
+	    Pt ->push_back( fourVec.Pt()  / jetContInst->m_units ); 
+	    Eta->push_back( fourVec.Eta() );
+	    Phi->push_back( fourVec.Phi() );
+	    M  ->push_back( fourVec.M()   / jetContInst->m_units ); 
+	  }
+	  else { 
+	    Pt->push_back( -999 ); 
+	  }
+        }
+
+
+	void clear(){
+          Pt ->clear();
+          Eta->clear();
+          Phi->clear();
+          M  ->clear();
+	}
+
+      };  //struct bjetscale
+      
+      jetScale* m_BJetCalib_OneMuDr04;
+      jetScale* m_BJetCalib_OneMuNuDr04;
+      jetScale* m_BJetCalib_AllMuDr04;
+      jetScale* m_BJetCalib_AllMuNuDr04;
+      jetScale* m_BJetCalib_OneMuPtDepDr;
+      jetScale* m_BJetCalib_OneMuNuPtDepDr;
+      jetScale* m_BJetCalib_AllMuPtDepDr;
+      jetScale* m_BJetCalib_AllMuNuPtDepDr;
+      jetScale* m_BJetCalib_OneMuPtDepDrCorMu04;
+      jetScale* m_BJetCalib_OneMuNuPtDepDrCorMu04;
+      jetScale* m_BJetCalib_AllMuPtDepDrCorMu04;
+      jetScale* m_BJetCalib_AllMuNuPtDepDrCorMu04;
+      jetScale* m_BJetCalib_OneMuPtDepDrCorMu04CorEl04;
+      jetScale* m_BJetCalib_OneMuNuPtDepDrCorMu04CorEl04;
+      jetScale* m_BJetCalib_AllMuPtDepDrCorMu04CorEl04;
+      jetScale* m_BJetCalib_AllMuNuPtDepDrCorMu04CorEl04;
+      jetScale* m_BJetCalib_OneMuDr04PtReco;
+      jetScale* m_BJetCalib_OneMuPtDepDrCorMu04PtReco;
+      jetScale* m_BJetCalib_AllMuPtDepDrCorMu04CorEl04PtReco;
+
+
+
       // constScale Eta
       std::vector<float> *m_constScaleEta;
       
